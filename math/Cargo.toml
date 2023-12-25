@@ -29,7 +29,7 @@ harness = false
 
 [features]
 concurrent = ["utils/concurrent", "std"]
-default = ["std"]
+default = ["std", "concurrent"]
 std = ["utils/std"]
 
 [dependencies]

@@ -17,7 +17,7 @@ bench = false
 
 [features]
 concurrent = ["prover/concurrent", "std"]
-default = ["std"]
+default = ["std", "concurrent" ]
 std = ["prover/std", "verifier/std"]
 
 [dependencies]

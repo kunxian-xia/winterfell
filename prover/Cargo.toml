@@ -21,7 +21,7 @@ harness = false
 
 [features]
 concurrent = ["crypto/concurrent", "math/concurrent", "fri/concurrent", "utils/concurrent", "std"]
-default = ["std"]
+default = ["std", "concurrent"]
 std = ["air/std", "crypto/std", "fri/std", "math/std", "utils/std"]
 
 [dependencies]
