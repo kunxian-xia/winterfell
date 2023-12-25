@@ -24,7 +24,8 @@ impl Air for FibAir {
     // CONSTRUCTOR
     // --------------------------------------------------------------------------------------------
     fn new(trace_info: TraceInfo, pub_inputs: Self::BaseField, options: ProofOptions) -> Self {
-        let degrees = vec![TransitionConstraintDegree::new(1), TransitionConstraintDegree::new(1)];
+        let degrees = vec![TransitionConstraintDegree::new(1); TRACE_WIDTH];
+        // let degrees = vec![TransitionConstraintDegree::new(1), TransitionConstraintDegree::new(1)];
         assert_eq!(TRACE_WIDTH, trace_info.width());
         FibAir {
             context: AirContext::new(trace_info, degrees, 3, options),
@@ -51,8 +52,12 @@ impl Air for FibAir {
         // constraints of Fibonacci sequence (2 terms per step):
         // s_{0, i+1} = s_{0, i} + s_{1, i}
         // s_{1, i+1} = s_{1, i} + s_{0, i+1}
-        result[0] = are_equal(next[0], current[0] + current[1]);
-        result[1] = are_equal(next[1], current[1] + next[0]);
+        for i in 0..(TRACE_WIDTH / 2) {
+            let i0 = i * 2;
+            let i1 = i * 2 + 1;
+            result[i0] = are_equal(next[i0], current[i0] + current[i1]);
+            result[i1] = are_equal(next[i1], current[i1] + next[i0]);
+        }
     }
 
     fn get_assertions(&self) -> Vec<Assertion<Self::BaseField>> {

@@ -10,7 +10,7 @@ use log::debug;
 use std::time::Instant;
 use winterfell::{
     crypto::{DefaultRandomCoin, ElementHasher},
-    math::{fields::f128::BaseElement, FieldElement},
+    math::{fields::f64::BaseElement, FieldElement},
     ProofOptions, Prover, StarkProof, Trace, VerifierError,
 };
 
@@ -26,10 +26,14 @@ mod tests;
 // CONSTANTS
 // ================================================================================================
 
-const TRACE_WIDTH: usize = 2;
+const TRACE_WIDTH: usize = 40;
 
 // FIBONACCI EXAMPLE
 // ================================================================================================
+
+type Blake3_192_GL = winterfell::crypto::hashers::Blake3_192<BaseElement>;
+type Blake3_256_GL = winterfell::crypto::hashers::Blake3_256<BaseElement>;
+type Sha3_256_GL = winterfell::crypto::hashers::Sha3_256<BaseElement>;
 
 pub fn get_example(
     options: &ExampleOptions,
@@ -39,13 +43,13 @@ pub fn get_example(
 
     match hash_fn {
         HashFunction::Blake3_192 => {
-            Ok(Box::new(FibExample::<Blake3_192>::new(sequence_length, options)))
+            Ok(Box::new(FibExample::<Blake3_192_GL>::new(sequence_length, options)))
         }
         HashFunction::Blake3_256 => {
-            Ok(Box::new(FibExample::<Blake3_256>::new(sequence_length, options)))
+            Ok(Box::new(FibExample::<Blake3_256_GL>::new(sequence_length, options)))
         }
         HashFunction::Sha3_256 => {
-            Ok(Box::new(FibExample::<Sha3_256>::new(sequence_length, options)))
+            Ok(Box::new(FibExample::<Sha3_256_GL>::new(sequence_length, options)))
         }
         _ => Err("The specified hash function cannot be used with this example.".to_string()),
     }

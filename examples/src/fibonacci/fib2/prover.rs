@@ -37,12 +37,20 @@ impl<H: ElementHasher> FibProver<H> {
         let mut trace = TraceTable::new(TRACE_WIDTH, sequence_length / 2);
         trace.fill(
             |state| {
-                state[0] = BaseElement::ONE;
-                state[1] = BaseElement::ONE;
+                for i in 0..(TRACE_WIDTH / 2) {
+                    let i0 = 2 * i;
+                    let i1 = 2 * i + 1;
+                    state[i0] = BaseElement::ONE;
+                    state[i1] = BaseElement::ONE;
+                }
             },
             |_, state| {
-                state[0] += state[1];
-                state[1] += state[0];
+                for i in 0..(TRACE_WIDTH / 2) {
+                    let i0 = 2 * i;
+                    let i1 = 2 * i + 1;
+                    state[i0] += state[i1];
+                    state[i1] += state[i0];
+                }
             },
         );
 
