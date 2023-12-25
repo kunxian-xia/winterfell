@@ -107,6 +107,7 @@ fn bench_fft(c: &mut Criterion) {
     fft_evaluate_poly::<f64::BaseElement, QuadExtension<f64::BaseElement>>(c, "f64_quad");
     fft_evaluate_poly::<f128::BaseElement, QuadExtension<f128::BaseElement>>(c, "f128_quad");
 
+    fft_evaluate_poly::<f62::BaseElement, CubeExtension<f62::BaseElement>>(c, "f62_cube");
     fft_evaluate_poly::<f64::BaseElement, CubeExtension<f64::BaseElement>>(c, "f64_cube");
 
     fft_interpolate_poly::<f62::BaseElement, f62::BaseElement>(c, "f62");
