@@ -12,7 +12,7 @@ use winter_math::{
     FieldElement, StarkField,
 };
 
-const SIZES: [usize; 3] = [262_144, 524_288, 1_048_576];
+const SIZES: [usize; 6] = [1 << 18, 1 << 19, 1 << 20, 1 << 21, 1 << 22, 1 << 23];
 
 fn fft_evaluate_poly<B, E>(c: &mut Criterion, field_name: &str)
 where
